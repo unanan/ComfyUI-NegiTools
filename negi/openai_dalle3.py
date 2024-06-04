@@ -51,8 +51,8 @@ class OpenAiDalle3:
                 self.__previous_resolution != resolution or self.__previous_seed != dummy_seed or
                 self.__previous_prompt != prompt):
             r0 = None
-            print(retry)
-            for retry_count in range(retry + 1):
+
+            for retry_count in [0]:  # range(retry + 1)
                 try:
                     client = openai.OpenAI(
                         # base_url="https://jiekou.wlai.vip/v1",
@@ -74,7 +74,7 @@ class OpenAiDalle3:
                     # 要钱的
                     # if retry_count >= retry:
                         # raise ex
-                    retry_count = retry_count + 1
+                    # retry_count = retry_count + 1
                     print("OpenAiDalle3: received Error")
                     raise ex
 
