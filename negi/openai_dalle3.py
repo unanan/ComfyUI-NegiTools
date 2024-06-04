@@ -75,8 +75,7 @@ class OpenAiDalle3:
                     # if retry_count >= retry:
                         # raise ex
                     retry_count = retry_count + 1
-                    print("OpenAiDalle3: received Error, retrying... #%d : %s" % (
-                        retry_count + 1, json.dumps(ex.response.json())))
+                    print("OpenAiDalle3: received Error")
                     raise ex
 
             # im0 = Image.open(io.BytesIO(base64.b64decode(r0.data[0].b64_json)))
