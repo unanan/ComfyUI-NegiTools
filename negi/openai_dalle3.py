@@ -57,7 +57,7 @@ class OpenAiDalle3:
                         # base_url="https://jiekou.wlai.vip/v1",
                         base_url=_base_url,
                         api_key=_api_key,
-                        timeout=120
+                        timeout=3000
                     )
                     r0 = client.images.generate(
                         model="dall-e-3",
