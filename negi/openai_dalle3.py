@@ -15,10 +15,7 @@ _api_key = os.environ.get("OPENAI_API_KEY")
 
 class OpenAiDalle3:
     def __init__(self):
-        self.__client = openai.OpenAI(
-            base_url=_base_url,
-            api_key=_api_key
-        )
+
         self.__previous_resolution = ""
         self.__previous_seed = -1
         self.__previous_prompt = ""
@@ -56,7 +53,12 @@ class OpenAiDalle3:
             r0 = None
             for retry_count in range(retry + 1):
                 try:
-                    r0 = self.__client.images.generate(
+                    client = OpenAI(
+                        # base_url="https://jiekou.wlai.vip/v1",
+                        base_url=_base_url,
+                        api_key=_api_key
+                    )
+                    r0 = client.images.generate(
                         model="dall-e-3",
                         prompt=prompt,
                         size=resolution,
@@ -70,9 +72,9 @@ class OpenAiDalle3:
                     # 要钱的
                     # if retry_count >= retry:
                         # raise ex
-                    raise ex
                     print("OpenAiDalle3: received BadRequestError, retrying... #%d : %s" % (
                         retry_count + 1, json.dumps(ex.response.json())))
+                    raise ex
 
             # im0 = Image.open(io.BytesIO(base64.b64decode(r0.data[0].b64_json)))
             im0 = Image.open(io.BytesIO(requests.get(r0.data[0].url.content)))
