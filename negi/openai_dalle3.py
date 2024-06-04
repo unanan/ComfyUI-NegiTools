@@ -59,7 +59,6 @@ class OpenAiDalle3:
 
             for retry_count in [0]:  # range(retry + 1)
                 try:
-
                     print("Created client")
                     r0 = self.client.images.generate(
                         model="dall-e-3",
@@ -81,7 +80,7 @@ class OpenAiDalle3:
                     raise ex
 
             # im0 = Image.open(io.BytesIO(base64.b64decode(r0.data[0].b64_json)))
-            im0 = Image.open(io.BytesIO(requests.get(r0.data[0].url.content)))
+            im0 = Image.open(io.BytesIO(requests.get(r0.data[0].url).content))
 
             if auto_save:
                 directory = utils.get_directory(auto_save_dir)
