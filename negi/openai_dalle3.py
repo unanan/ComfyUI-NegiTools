@@ -15,7 +15,12 @@ _api_key = os.environ.get("OPENAI_API_KEY")
 
 class OpenAiDalle3:
     def __init__(self):
-
+        self.client = openai.OpenAI(
+            # base_url="https://jiekou.wlai.vip/v1",
+            base_url=_base_url,
+            api_key=_api_key,
+            timeout=3000
+        )
         self.__previous_resolution = ""
         self.__previous_seed = -1
         self.__previous_prompt = ""
@@ -54,14 +59,9 @@ class OpenAiDalle3:
 
             for retry_count in [0]:  # range(retry + 1)
                 try:
-                    client = openai.OpenAI(
-                        # base_url="https://jiekou.wlai.vip/v1",
-                        base_url=_base_url,
-                        api_key=_api_key,
-                        timeout=3000
-                    )
-                    print("Create client")
-                    r0 = client.images.generate(
+
+                    print("Created client")
+                    r0 = self.client.images.generate(
                         model="dall-e-3",
                         prompt=prompt,
                         size=resolution,
