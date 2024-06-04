@@ -3,7 +3,7 @@ import base64
 import io
 import os
 import json
-
+import requests
 import torch
 from PIL import Image
 from torchvision.transforms import functional as TF
