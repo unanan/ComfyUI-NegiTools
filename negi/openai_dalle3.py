@@ -74,6 +74,7 @@ class OpenAiDalle3:
                     # 要钱的
                     # if retry_count >= retry:
                         # raise ex
+                    retry_count = retry_count + 1
                     print("OpenAiDalle3: received Error, retrying... #%d : %s" % (
                         retry_count + 1, json.dumps(ex.response.json())))
                     raise ex
