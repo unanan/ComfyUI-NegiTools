@@ -60,6 +60,7 @@ class OpenAiDalle3:
                         api_key=_api_key,
                         timeout=3000
                     )
+                    print("Create client")
                     r0 = client.images.generate(
                         model="dall-e-3",
                         prompt=prompt,
@@ -69,6 +70,7 @@ class OpenAiDalle3:
                         n=1,
                         #response_format="b64_json"
                     )
+                    print("Got result")
                     break
                 except Exception as ex:
                     # 要钱的
