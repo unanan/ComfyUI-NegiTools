@@ -9,11 +9,16 @@ from PIL import Image
 from torchvision.transforms import functional as TF
 
 from . import utils
+_base_url = os.environ.get("OPENAI_BASE_URL")
+_api_key = os.environ.get("OPENAI_API_KEY")
 
 
 class OpenAiDalle3:
     def __init__(self):
-        self.__client = openai.OpenAI()
+        self.__client = openai.OpenAI(
+            base_url=_base_url,
+            api_key=_api_key
+        )
         self.__previous_resolution = ""
         self.__previous_seed = -1
         self.__previous_prompt = ""
@@ -58,16 +63,19 @@ class OpenAiDalle3:
                         quality="hd" if quality == "HD" else "standard",
                         style="vivid" if style == "vivid" else "natural",
                         n=1,
-                        response_format="b64_json"
+                        #response_format="b64_json"
                     )
                     break
                 except openai.BadRequestError as ex:
-                    if retry_count >= retry:
-                        raise ex
+                    # 要钱的
+                    # if retry_count >= retry:
+                        # raise ex
+                    raise ex
                     print("OpenAiDalle3: received BadRequestError, retrying... #%d : %s" % (
                         retry_count + 1, json.dumps(ex.response.json())))
 
-            im0 = Image.open(io.BytesIO(base64.b64decode(r0.data[0].b64_json)))
+            # im0 = Image.open(io.BytesIO(base64.b64decode(r0.data[0].b64_json)))
+            im0 = Image.open(io.BytesIO(requests.get(r0.data[0].url.content)))
 
             if auto_save:
                 directory = utils.get_directory(auto_save_dir)
