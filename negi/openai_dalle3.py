@@ -51,6 +51,7 @@ class OpenAiDalle3:
                 self.__previous_resolution != resolution or self.__previous_seed != dummy_seed or
                 self.__previous_prompt != prompt):
             r0 = None
+            print(retry)
             for retry_count in range(retry + 1):
                 try:
                     client = openai.OpenAI(
@@ -69,11 +70,11 @@ class OpenAiDalle3:
                         #response_format="b64_json"
                     )
                     break
-                except openai.BadRequestError as ex:
+                except Exception as ex:
                     # 要钱的
                     # if retry_count >= retry:
                         # raise ex
-                    print("OpenAiDalle3: received BadRequestError, retrying... #%d : %s" % (
+                    print("OpenAiDalle3: received Error, retrying... #%d : %s" % (
                         retry_count + 1, json.dumps(ex.response.json())))
                     raise ex
 
