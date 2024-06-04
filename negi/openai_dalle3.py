@@ -53,7 +53,7 @@ class OpenAiDalle3:
             r0 = None
             for retry_count in range(retry + 1):
                 try:
-                    client = OpenAI(
+                    client = openai.OpenAI(
                         # base_url="https://jiekou.wlai.vip/v1",
                         base_url=_base_url,
                         api_key=_api_key
